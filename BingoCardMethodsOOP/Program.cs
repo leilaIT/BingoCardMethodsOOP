@@ -8,18 +8,24 @@ namespace BingoCardMethodsOOP
 {
     internal class Program
     {
-        static int[,] bCard = new int[5, 5];
+        static int[,] _bCard = new int[,] { };
         static void Main(string[] args)
         {
             while(true)
             {
+                initializeCard();
                 generateCard();
                 displayCard();
-                regenerateCard();
+
+                if (!regenerateCard())
+                    break;
             }
 
-           
             Console.ReadKey();
+        }
+        static void initializeCard()
+        {
+            _bCard = new int[5, 5];
         }
         static void generateCard ()
         {
@@ -27,70 +33,77 @@ namespace BingoCardMethodsOOP
             Random rnd = new Random();
             int num = 0;
 
-            for (int x = 0; x < bCard.GetLength(0); x++)
+            for (int x = 0; x < _bCard.GetLength(0); x++)
             {   
                 listNum.Clear();
-                listNum = possibleValues(listNum);
+                for (int c = 1; c < 16; c++)
+                {
+                    listNum.Add(c);
+                }
 
-                for (int y = 0; y < bCard.GetLength(1); y++)
+                for (int y = 0; y < _bCard.GetLength(1); y++)
                 {
                     num = rnd.Next(0, listNum.Count);
-                    bCard[y, x] = listNum[num];
+                    _bCard[y, x] = listNum[num];
                     listNum.RemoveAt(num);
                 }
             }
-        }
-        static List<int> possibleValues (List<int> listNum)
-        {
-            for (int c = 1; c < 16; c++)
-            {
-                listNum.Add(c);
-            }
-            return listNum;
+            _bCard[2, 2] = -1;
         }
         static void displayCard ()
         {
             string disp = "";
             int dispCount = 0;
 
+            Console.Clear();
             Console.WriteLine(" B\t I\t N\t G\t O");
-            for (int x = 0; x < bCard.GetLength(0); x++)
+            for (int x = 0; x < _bCard.GetLength(0); x++)
             {
-                for (int y = 0; y < bCard.GetLength(1); y++)
+                for (int y = 0; y < _bCard.GetLength(1); y++)
                 {
-                    bCard[x, y] += (15 * y);
-                    disp = bCard[x, y].ToString();
+                    _bCard[x, y] += (15 * y);
+                    disp = _bCard[x, y].ToString();
                     dispCount = disp.Length;
-                    while (dispCount != 3)
+
+                    if (_bCard[x, y] == _bCard[2, 2])
                     {
-                        Console.Write("0");
-                        dispCount++;
+                        Console.Write("FRE" + "\t");
                     }
-                    Console.Write(bCard[x, y] + "\t");
+                    else
+                    {
+                        while (dispCount != 3)
+                        {
+                            Console.Write("0");
+                            dispCount++;
+                        }
+                        Console.Write(_bCard[x, y] + "\t");
+                    }
                 }
                 Console.WriteLine();
             }
         }
-        static void regenerateCard ()
+        static bool regenerateCard ()
         {
             string answer = "";
+            bool ans = true;
             
-            Console.WriteLine("Would you like to regenerate the card? [Y/N]");
-            answer = Console.ReadLine().ToUpper();
-            if (answer == "Y")
+            while (true)
             {
-                for (int x = 0; x < bCard.GetLength(0); x++)
+                Console.WriteLine("Would you like to regenerate the card? [Y/N]");
+                answer = Console.ReadLine().ToUpper();
+                if (answer == "N")
                 {
-                    for (int y = 0; y < bCard.GetLength(1); y++)
-                    {
-                        bCard[x, y] = 0;
-                    }
+                    ans = false;
+                    break;
                 }
+                else if (answer == "Y")
+                {
+                    break;
+                }
+                else
+                    Console.WriteLine("Invalid Input.");
             }
-            else
-            {
-                break;
-            }
+            return ans;
         }
     }
 }
