@@ -56,9 +56,16 @@ namespace BingoCardMethodsOOP
             int dispCount = 0;
 
             Console.Clear();
-            Console.WriteLine(" B\t I\t N\t G\t O");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("    B\t    I\t    N\t    G\t    O");
+            Console.ResetColor();
+
             for (int x = 0; x < _bCard.GetLength(0); x++)
             {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("|  ");
+                Console.ResetColor();
+
                 for (int y = 0; y < _bCard.GetLength(1); y++)
                 {
                     _bCard[x, y] += (15 * y);
@@ -67,7 +74,13 @@ namespace BingoCardMethodsOOP
 
                     if (_bCard[x, y] == _bCard[2, 2])
                     {
-                        Console.Write("FRE" + "\t");
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.Write("FRE");
+                        Console.ResetColor();
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("  |  ");
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -76,10 +89,15 @@ namespace BingoCardMethodsOOP
                             Console.Write("0");
                             dispCount++;
                         }
-                        Console.Write(_bCard[x, y] + "\t");
+                        Console.Write(_bCard[x, y]);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("  |  ");
+                        Console.ResetColor();
                     }
                 }
-                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\n-----------------------------------------");
+                Console.ResetColor();
             }
         }
         static bool regenerateCard ()
