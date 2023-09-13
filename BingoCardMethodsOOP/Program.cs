@@ -64,11 +64,14 @@ namespace BingoCardMethodsOOP
              
                 for (int y = 0; y < _bCard.GetLength(1); y++)
                 {
-                    _bCard[x, y] += (15 * y);
+                    if (_bCard[x, y] > -1)
+                    {
+                        _bCard[x, y] += (15 * y);
+                    }
                     disp = _bCard[x, y].ToString();
                     dispCount = disp.Length;
 
-                    if (_bCard[x, y] == _bCard[2, 2])
+                    if (_bCard[x, y] == -1)
                     {
                         Console.Write("FRE");
                         Console.Write("  |  ");
