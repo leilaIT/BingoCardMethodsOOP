@@ -56,16 +56,12 @@ namespace BingoCardMethodsOOP
             int dispCount = 0;
 
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("    B\t    I\t    N\t    G\t    O");
-            Console.ResetColor();
-
+            
             for (int x = 0; x < _bCard.GetLength(0); x++)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("|  ");
-                Console.ResetColor();
-
+             
                 for (int y = 0; y < _bCard.GetLength(1); y++)
                 {
                     _bCard[x, y] += (15 * y);
@@ -74,30 +70,34 @@ namespace BingoCardMethodsOOP
 
                     if (_bCard[x, y] == _bCard[2, 2])
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.Write("FRE");
-                        Console.ResetColor();
-
-                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("  |  ");
-                        Console.ResetColor();
                     }
                     else
                     {
+                        if (y == 0)
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                        else if (y == 1)
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        else if(y == 2)
+                            Console.ForegroundColor = ConsoleColor.Green;
+                        else if(y == 3)
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                        else if (y == 4)
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+
                         while (dispCount != 3)
                         {
                             Console.Write("0");
                             dispCount++;
                         }
                         Console.Write(_bCard[x, y]);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("  |  ");
                         Console.ResetColor();
+
+                        Console.Write("  |  ");
                     }
                 }
-                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\n-----------------------------------------");
-                Console.ResetColor();
             }
         }
         static bool regenerateCard ()
